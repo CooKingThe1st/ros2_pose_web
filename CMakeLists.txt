@@ -17,17 +17,29 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+include_directories(include)
 
-add_executable(image_copy src/image_copy.cpp)
-target_include_directories(image_copy PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+#add_executable(image_copy_Cpp src/image_copy_Cpp.cpp)
+#ament_target_dependencies(image_copy_Cpp rclcpp)
 
-install(TARGETS image_copy
-  DESTINATION lib/${PROJECT_NAME})
+#target_include_directories(image_copy_Cpp PUBLIC
+#  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#  $<INSTALL_INTERFACE:include>)
+
+#install(TARGETS image_copy_Cpp
+#  DESTINATION lib/${PROJECT_NAME})
+
+ament_python_install_package(scripts/)
+install(PROGRAMS
+  scripts/image_copy.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
